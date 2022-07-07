@@ -6,16 +6,16 @@ You have been provided with data for a small Zoo. Your web app should display al
 
 ## Setup
 
-1. Create a database named `zoo_animals`
-2. Run the SQL in the `database.sql` file in that database
-3. `npm install`
-4. `npm run server`
-5. `npm run client`
+[x] Create a database named `zoo_animals`
+[x] Run the SQL in the `database.sql` file in that database
+[x] `npm install`
+[x] `npm run server`
+[x] `npm run client`
 
 ## Task List
 
-- [ ] Write your SQL in the `routes/zoo.router.js` file.
-- [ ] Add a Saga in the `index.js` file for making your `GET` request. It should listen for the action type of `GET_ZOO_ANIMALS`.
+- [x] Write your SQL in the `routes/zoo.router.js` file.
+- [x] Add a Saga in the `index.js` file for making your `GET` request. It should listen for the action type of `GET_ZOO_ANIMALS`.
 
 ## Sample Output
 

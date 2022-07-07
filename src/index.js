@@ -8,11 +8,24 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
+import { takeEvery, put } from 'redux-saga/effects';
+// Import axios
+import axios from 'axios';
 
 // Your saga should listen for the action type of `GET_ZOO_ANIMALS`
 function* rootSaga() {
     // YOUR CODE HERE
+    yield takeEvery( 'GET_ZOO_ANIMALS', getZooAnimalsSaga )
+}
 
+function* getZooAnimalsSaga(action) {
+    try {
+        const zoo = yield axios.get( '/zoo' );
+        console.log(zoo.data)
+        yield put({ type: 'SET_ZOO_ANIMALS', payload: zoo.data });
+    } catch {
+        console.log('getZooAnimalsSaga Generator Rrror')
+    }
 }
 
 // Create sagaMiddleware
@@ -40,5 +53,5 @@ const storeInstance = createStore(
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, 
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>,
     document.getElementById('root'));
