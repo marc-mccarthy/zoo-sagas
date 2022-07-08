@@ -22,6 +22,7 @@ function AnimalList() {
 				<tr>
 					<th>Species</th>
 					<th>Class</th>
+                    <th>Transfer</th>
 				</tr>
 			</thead>
 			<tbody>
