@@ -1,6 +1,7 @@
 import AnimalList from '../AnimalList/AnimalList';
 import './App.css';
 import AddAnimal from '../AddAnimal/AddAnimal';
+import AddClass from '../AddClass/AddClass';
 
 function App() {
 	// Renders the entire app on the DOM
@@ -13,6 +14,8 @@ function App() {
 			<br />
 			<AddAnimal />
 			<br />
+            <AddClass />
+            <br />
 			<AnimalList />
 		</div>
 	);
