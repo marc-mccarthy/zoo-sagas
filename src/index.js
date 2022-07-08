@@ -15,16 +15,46 @@ import axios from 'axios';
 // Your saga should listen for the action type of `GET_ZOO_ANIMALS`
 function* rootSaga() {
     // YOUR CODE HERE
-    yield takeEvery( 'GET_ZOO_ANIMALS', getZooAnimalsSaga )
+    yield takeEvery( 'GET_ZOO_ANIMALS', getZooAnimalsSaga );
+    yield takeEvery( 'ADD_ANIMAL_SAGA', addAnimalSaga);
+    yield takeEvery( 'GET_ANIMAL_CLASSES_SAGA', getAnimalClassesSaga );
+    yield takeEvery( 'TRANSFER_ANIMAL_SAGA', transferAnimalSaga);
 }
 
-function* getZooAnimalsSaga(action) {
+function* getZooAnimalsSaga() {
     try {
         const zoo = yield axios.get( '/zoo' );
-        console.log(zoo.data)
         yield put({ type: 'SET_ZOO_ANIMALS', payload: zoo.data });
     } catch {
-        console.log('getZooAnimalsSaga Generator Rrror')
+        console.log('getZooAnimalsSaga Generator Error')
+    }
+}
+
+function* getAnimalClassesSaga() {
+    try {
+        const classes = yield axios.get( '/zoo/classes' );
+        yield put({ type: 'SET_ANIMAL_CLASSES', payload: classes.data });
+    } catch {
+        console.log('getAnimalClassesSaga Generator Error')
+    }
+}
+
+function* addAnimalSaga(action) {
+    try {
+        console.log("ADDED MEmmmmmmmmmmm", action.payload)
+        yield axios.post( '/zoo/add', action.payload );
+        yield put({ type: 'GET_ZOO_ANIMALS' });
+    } catch {
+        console.log('addAnimalSaga Generator Error')
+    }
+}
+
+function* transferAnimalSaga(action) {
+    try {
+        yield axios.delete( `/zoo/delete/${action.payload.id}`);
+        yield put({ type: 'GET_ZOO_ANIMALS' });
+    } catch {
+        console.log('transferAnimalSaga Generator Error')
     }
 }
 
@@ -41,10 +71,20 @@ const zooAnimals = (state = [], action) => {
     }
 }
 
+const animalClasses = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_ANIMAL_CLASSES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         zooAnimals,
+        animalClasses,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

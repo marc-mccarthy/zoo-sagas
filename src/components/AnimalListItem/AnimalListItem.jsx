@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import { useDispatch } from 'react-redux';
 
-// DO NOT MODIFY THIS FILE FOR BASE MODE!
 function AnimalListItem({ classData }) {
-  // Renders the list of animals
-  return (
-    <tr>
-      <td>{classData.species_name}</td>
-      <td>{classData.class_name}</td>
-    </tr>
-  );
+
+    const dispatch = useDispatch();
+
+    const transfer = () => {
+        dispatch({ type: 'TRANSFER_ANIMAL_SAGA', payload: classData });
+    }
+
+	return (
+		<tr>
+			<td>{classData.species_name}</td>
+			<td>{classData.class_name}</td>
+            <td><button onClick={transfer}>Transfer</button></td>
+		</tr>
+	);
 }
 
 export default AnimalListItem;
